@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>校招生在小红书体验怎么样？</title>
+  <style>
+    :root {
+      --brand: #ff2442;
+      --text: #222222;
+      --muted: #999999;
+      --line: #eeeeee;
+      --page: #ffffff;
+      --mint: #7ce2c3;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      background: #f4f4f4;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: #f4f4f4;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app {
+      position: relative;
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0 auto;
+      overflow: hidden;
+      background: var(--page);
+      box-shadow: 0 0 24px rgba(0, 0, 0, 0.04);
+    }
+
+    .search-header {
+      position: sticky;
+      z-index: 10;
+      top: 0;
+      padding-top: env(safe-area-inset-top);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(14px);
+    }
+
+    .search-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 52px;
+      padding: 7px 14px 5px 10px;
+    }
+
+    .icon-button {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 36px;
+      padding: 0;
+      color: #333333;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .icon-button svg {
+      width: 23px;
+      height: 23px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      min-width: 0;
+      height: 36px;
+      padding: 0 10px 0 13px;
+      border: 1px solid #e7e7e7;
+      border-radius: 19px;
+      background: #f7f7f7;
+    }
+
+    .search-box input {
+      width: 100%;
+      min-width: 0;
+      padding: 0;
+      color: #333333;
+      font-size: 14px;
+      line-height: 34px;
+      border: 0;
+      outline: none;
+      background: transparent;
+    }
+
+    .clear-search {
+      display: grid;
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      color: #ffffff;
+      font-size: 13px;
+      line-height: 18px;
+      border: 0;
+      border-radius: 50%;
+      background: #c6c6c6;
+      cursor: pointer;
+      place-items: center;
+    }
+
+    .search-submit {
+      flex: 0 0 auto;
+      padding: 4px 0 4px 2px;
+      color: #333333;
+      font-size: 14px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .category-nav {
+      display: flex;
+      align-items: center;
+      height: 38px;
+      padding: 0 13px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .category-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-tab {
+      position: relative;
+      flex: 0 0 auto;
+      height: 38px;
+      padding: 0 15px;
+      color: #777777;
+      font-size: 14px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .category-tab:first-child {
+      padding-right: 17px;
+      padding-left: 3px;
+    }
+
+    .category-tab.active {
+      color: #222222;
+      font-weight: 600;
+    }
+
+    .category-tab.active::after {
+      position: absolute;
+      bottom: 1px;
+      left: 50%;
+      width: 22px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--brand);
+      content: "";
+      transform: translateX(-50%);
+    }
+
+    .category-tab.ask-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: auto;
+      padding-right: 1px;
+      padding-left: 20px;
+      color: #333333;
+    }
+
+    .mini-spark {
+      width: 16px;
+      height: 16px;
+      color: var(--mint);
+    }
+
+    .suggestion-layer {
+      position: absolute;
+      top: 52px;
+      left: 10px;
+      right: 10px;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid #eeeeee;
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .suggestion-layer.hidden {
+      display: none;
+    }
+
+    .suggestion-bubble {
+      padding: 10px 12px;
+      color: #333333;
+      font-size: 13px;
+      text-align: left;
+      border: 1px solid #eeeeee;
+      border-radius: 999px;
+      background: #f7f7f7;
+      cursor: pointer;
+    }
+
+    .suggestion-bubble.selected {
+      color: #d4324b;
+      border-color: #ffd6dd;
+      background: #fff3f5;
+    }
+
+    .suggestion-type {
+      color: #888888;
+    }
+
+    main {
+      padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    }
+
+    .guide-state,
+    .placeholder-state,
+    .invalid-state {
+      padding: 30px 22px;
+      text-align: center;
+    }
+
+    .guide-state p,
+    .placeholder-state p,
+    .invalid-state p {
+      margin: 0;
+      color: #999999;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .guide-state p + p {
+      margin-top: 6px;
+    }
+
+    .state-title {
+      margin: 0 0 10px;
+      color: #333333;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .state-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 16px;
+      padding: 10px 18px;
+      color: var(--brand);
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid #ffd7de;
+      border-radius: 999px;
+      background: #fff5f7;
+      cursor: pointer;
+    }
+
+    /* 点点内容概览卡：后续仅调整此区域内部内容，保持整卡跳转结构不变。 */
+    .overview-card {
+      display: block;
+      margin: 7px 10px 13px;
+      padding: 14px;
+      overflow: hidden;
+      color: inherit;
+      text-decoration: none;
+      border: 1px solid #e8e8e8;
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.025);
+      cursor: pointer;
+    }
+
+    .overview-card:active {
+      background: #fcfcfc;
+    }
+
+    .overview-summary {
+      margin: 0;
+      color: #333333;
+      font-size: 15px;
+      line-height: 1.72;
+      letter-spacing: 0.1px;
+    }
+
+    /* 进站攻略缩略卡：只露出入口与下一段标题，暗示仍有后续内容 */
+    .guide-entry {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      margin-top: 12px;
+      padding: 0;
+      color: #2f5f9e;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.5;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .guide-entry > span {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .guide-preview {
+      position: relative;
+      max-height: 31px;
+      margin-top: 12px;
+      padding-top: 12px;
+      overflow: hidden;
+      border-top: 1px solid #f2f2f2;
+    }
+
+    .guide-next {
+      margin: 0;
+      overflow: hidden;
+      color: #555555;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.5;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .guide-fade {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 10px;
+      background: linear-gradient(rgba(255, 255, 255, 0), #ffffff);
+      pointer-events: none;
+    }
+
+    /* 卡片底部“总结 N 篇笔记生成”一行 */
+    .summary-footer {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 8px;
+      color: #8f8f8f;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .summary-footer-avatars {
+      display: inline-flex;
+      flex: 0 0 auto;
+    }
+
+    .summary-avatar {
+      width: 19px;
+      height: 19px;
+      object-fit: cover;
+      border: 1px solid #ffffff;
+      border-radius: 50%;
+      background: #eeeeee;
+    }
+
+    .summary-avatar + .summary-avatar {
+      margin-left: -6px;
+    }
+
+    .summary-footer-arrow {
+      display: grid;
+      flex: 0 0 auto;
+      width: 24px;
+      height: 24px;
+      margin-left: auto;
+      color: #c0c0c0;
+      font-size: 16px;
+      line-height: 1;
+      border: 1px solid #ececec;
+      border-radius: 50%;
+      place-items: center;
+    }
+
+    .opinion-section {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .opinion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .opinion-title {
+      color: #666666;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .all-comments {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      color: #999999;
+      font-size: 11px;
+    }
+
+    .all-comments > span {
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .opinion-bar {
+      display: flex;
+      width: 100%;
+      height: 40px;
+      overflow: hidden;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1;
+      border-radius: 7px;
+    }
+
+    .opinion-positive,
+    .opinion-negative {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      padding: 0 4px;
+      white-space: nowrap;
+    }
+
+    .opinion-positive {
+      width: 70%;
+      background: #ff5069;
+    }
+
+    .opinion-negative {
+      width: 30%;
+      background: #5b8def;
+    }
+
+    .evidence-hint {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 12px;
+      color: #999999;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .evidence-hint svg {
+      flex: 0 0 auto;
+      width: 14px;
+      height: 14px;
+      color: #aaaaaa;
+    }
+
+    .feed {
+      padding: 0 5px;
+      column-count: 2;
+      column-gap: 5px;
+    }
+
+    .post-card {
+      display: inline-block;
+      width: 100%;
+      margin: 0 0 6px;
+      overflow: hidden;
+      vertical-align: top;
+      border-radius: 7px;
+      background: #ffffff;
+      break-inside: avoid;
+    }
+
+    .post-cover {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 7px;
+      background: #eeeeee;
+    }
+
+    .post-body {
+      padding: 7px 6px 5px;
+    }
+
+    .post-title {
+      display: -webkit-box;
+      margin: 0 0 8px;
+      overflow: hidden;
+      color: #333333;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.45;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      color: #999999;
+      font-size: 10px;
+    }
+
+    .post-meta-text {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .post-date {
+      margin-top: 2px;
+      color: #999999;
+      font-size: 10px;
+      line-height: 1.2;
+    }
+
+    .avatar {
+      display: inline-grid;
+      flex: 0 0 auto;
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 50%;
+      place-items: center;
+    }
+
+    .author {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .like-button {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 3px;
+      margin-left: auto;
+      padding: 2px 0 2px 7px;
+      color: #888888;
+      font-size: 10px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .like-button svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .like-button.liked {
+      color: var(--brand);
+    }
+
+    .like-button.liked svg {
+      fill: currentColor;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 30;
+      bottom: calc(32px + env(safe-area-inset-bottom));
+      left: 50%;
+      max-width: min(330px, calc(100vw - 48px));
+      padding: 10px 15px;
+      color: #ffffff;
+      font-size: 12px;
+      line-height: 1.5;
+      text-align: center;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.76);
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 10px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (min-width: 431px) {
+      .app {
+        min-height: 100vh;
+      }
+    }
+
+    @media (max-width: 350px) {
+      .search-row {
+        gap: 7px;
+        padding-right: 10px;
+      }
+
+      .category-tab {
+        padding-right: 11px;
+        padding-left: 11px;
+      }
+
+      .overview-summary {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="search-header">
+      <form class="search-row" id="search-form">
+        <button class="icon-button" type="button" aria-label="返回">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m15 18-6-6 6-6"/>
+          </svg>
+        </button>
+        <label class="search-box">
+          <input id="search-input" type="text" placeholder="点击选择预设问题" aria-label="搜索内容" autocomplete="off">
+          <button class="clear-search" id="clear-search" type="button" aria-label="清空搜索">×</button>
+        </label>
+        <button class="search-submit" type="submit">搜索</button>
+      </form>
+
+      <div class="suggestion-layer hidden" id="suggestion-layer" aria-live="polite"></div>
+
+      <nav class="category-nav" aria-label="搜索分类">
+        <button class="category-tab active" type="button" data-category="全部">全部</button>
+        <button class="category-tab" type="button" data-category="用户">用户</button>
+        <button class="category-tab" type="button" data-category="商品">商品</button>
+        <button class="category-tab" type="button" data-category="图片">图片</button>
+        <button class="category-tab ask-tab" type="button" data-category="问点点">
+          <svg class="mini-spark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2c.6 5.6 4.4 9.4 10 10-5.6.6-9.4 4.4-10 10-.6-5.6-4.4-9.4-10-10 5.6-.6 9.4-4.4 10-10Z"/>
+          </svg>
+          问点点
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <div id="result-container"></div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="mockData.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
