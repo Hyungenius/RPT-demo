@@ -324,7 +324,10 @@
       ? `
         <button class="guide-source-box" type="button" data-role="cluster-link">
           <span>${escapeHtml(guide.sourceEntry)}</span>
-          <span class="guide-source-arrow" aria-hidden="true">›</span>
+          <span class="guide-source-cta">
+            <span>点击查看</span>
+            <span class="guide-source-arrow" aria-hidden="true">›</span>
+          </span>
         </button>
       `
       : `

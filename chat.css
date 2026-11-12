@@ -600,6 +600,15 @@ a {
   background: #fcecbe;
 }
 
+.guide-source-cta {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
 .guide-source-arrow {
   flex: 0 0 auto;
   font-size: 16px;

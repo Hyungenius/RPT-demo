@@ -719,7 +719,7 @@ window.RPTMock = (function () {
           footerLabel: "为您精选全网帖子和评论生成",
           nextSectionTitle: "🗺️ 规划你的转码路径",
           // 点点回复页顶部的精选入口，配置后替代默认的“总结 N 篇笔记生成”。
-          sourceEntry: "为您精选全网帖子和评论生成",
+          sourceEntry: "为您精选全网高质帖子和评论",
           sheetPosts: processSheetPosts,
           // 点点回复页正文，按块渲染以保留标题层级。
           answer: {
